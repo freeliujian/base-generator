@@ -5,7 +5,7 @@ import fsExtra from 'fs-extra';
 import glob from 'glob';
 import prompts from 'prompts';
 import yParser from 'yargs-parser';
-import Handlebar from 'handlebar';
+import Handlebars from 'handlebars';
 
 export interface IGeneratorOpts {
   baseDir: string;
@@ -38,7 +38,6 @@ class Generator {
     this.slient = !!slient;
 
     this.prompts = {};
-    console.log(3);
   }
 
   async run() {
@@ -59,14 +58,15 @@ class Generator {
 
   copyTpl(opts: IGeneratorCopyTplOpts) {
     const tpl = readFileSync(opts.templatePath, 'utf-8');
-    const content = Handlebar.render(tpl, opts.context);
+    const content = Handlebars.compile(tpl);
+    const configContent = content(opts.context)
     fsExtra.mkdirpSync(dirname(opts.target));
     if (!this.slient) {
       console.log(
         `${chalk.green('Write:')} ${relative(this.baseDir, opts.target)}`,
       );
     }
-    writeFileSync(opts.target, content, 'utf-8');
+    writeFileSync(opts.target, configContent, 'utf-8');
   }
 
   copyDirectory(opts: IGeneratorCopyDirectoryOpts) {

@@ -1,8 +1,9 @@
-const { series, src, dest, watch, parallel } = require("gulp");
-const ts = require("gulp-typescript");
-const babel = require("gulp-babel");
-const gulpIf = require("gulp-if");
-const through2 = require("through2");
+import { series, src, dest, watch, parallel } from "gulp";
+import  GulpTypescript from "gulp-typescript";
+import babel from "./gulp-babel.js";
+import { obj } from "through2";
+
+const { createProject } = GulpTypescript;
 
 const paths = {
   dest: {
@@ -17,7 +18,7 @@ const paths = {
 const TSFileExtensionRegex = /\.d?\.ts$/;
 const JSFileExtensionRegex = /\.js$/;
 
-const tsProject = ts.createProject("./tsconfig.json", { declaration: true });
+const tsProject = createProject("./tsconfig.json", { declaration: true });
 
 const compileScript = (babelConfig, destDir, BABEL_ENV = "cjs") => {
   process.env.BABEL_ENV = BABEL_ENV;
@@ -72,22 +73,26 @@ const buildESM = () => {
   return compileScript(babelConfig, paths.dest.esm);
 };
 
-const buildCJS = () => {
-  const babelConfig = {
-    presets: [
-      ["@babel/preset-env", { modules: "commonjs" }],
-      "@babel/preset-typescript",
-      "@babel/preset-flow",
-    ],
-  };
-  return compileScript(babelConfig, paths.dest.cjs);
+const buildCJS = (cd) => {
+  // const babelConfig = {
+  //   presets: [
+  //     ["@babel/preset-env", { modules: "commonjs" }],
+  //     "@babel/preset-typescript",
+  //     "@babel/preset-flow",
+  //   ],
+  //   plugins: [
+  //     "@babel/plugin-transform-modules-commonjs",
+  //   ]
+  // };
+  // return compileScript(babelConfig, paths.dest.cjs);
+  cd();
 };
 
 const buildTypes = () => {
   return src(paths.scripts)
     .pipe(tsProject())
     .pipe(
-      through2.obj(function(file, encoding, next) {
+      obj(function(file, encoding, next) {
         if (TSFileExtensionRegex.test(file.path)) {
           this.push(file);
         }
@@ -103,4 +108,5 @@ const watchFiles = () => {
   return watch(paths.scripts, buildScript);
 };
 
-exports.default = buildScript;
+const _default = watchFiles;
+export { _default as default };

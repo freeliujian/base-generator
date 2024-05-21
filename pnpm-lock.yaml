@@ -17,9 +17,9 @@ importers:
       glob:
         specifier: ^10.3.15
         version: 10.3.15
-      handlebar:
-        specifier: ^1.0.0
-        version: 1.0.0
+      handlebars:
+        specifier: ^4.7.8
+        version: 4.7.8
       prompts:
         specifier: ^2.4.2
         version: 2.4.2
@@ -27,6 +27,9 @@ importers:
         specifier: ^21.1.1
         version: 21.1.1
     devDependencies:
+      '@babel/plugin-transform-modules-commonjs':
+        specifier: ^7.24.1
+        version: 7.24.1(@babel/core@7.24.5)
       '@babel/preset-env':
         specifier: ^7.24.5
         version: 7.24.5(@babel/core@7.24.5)
@@ -1248,9 +1251,6 @@ packages:
     resolution: {integrity: sha512-V2FaKiOhpR3DRXZuYdRLn/qiY0yI5XmqbTKrYbdemJ+xOh2d2MOweI/XFgMzd/9+1twdvMwllnZbWZNJ+BOm4A==}
     engines: {node: '>= 10.13.0'}
 
-  handlebar@1.0.0:
-    resolution: {integrity: sha512-uD430vbxB0MevytP9+MEckbAQHkJsSCEDoSJW1V6SH6ypRZx98377lIWIgJZKOasn719q7HccaEy9qRzr5ji8A==}
-
   handlebars@4.7.8:
     resolution: {integrity: sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ==}
     engines: {node: '>=0.4.7'}
@@ -1385,9 +1385,6 @@ packages:
   jackspeak@2.3.6:
     resolution: {integrity: sha512-N3yCS/NegsOBokc8GAdM8UcmfsKiSS8cipheD/nivzr700H+nsMOxJjQnvwOcRYVuFkdH0wGUvW2WbXGmrZGbQ==}
     engines: {node: '>=14'}
-
-  jquery@2.2.4:
-    resolution: {integrity: sha512-lBHj60ezci2u1v2FqnZIraShGgEXq35qCzMv4lITyHGppTnA13rwR0MgwyNJh9TnDs3aXUvd1xjAotfraMHX/Q==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -3347,11 +3344,6 @@ snapshots:
     dependencies:
       glogg: 2.2.0
 
-  handlebar@1.0.0:
-    dependencies:
-      handlebars: 4.7.8
-      jquery: 2.2.4
-
   handlebars@4.7.8:
     dependencies:
       minimist: 1.2.8
@@ -3464,8 +3456,6 @@ snapshots:
       '@isaacs/cliui': 8.0.2
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
-
-  jquery@2.2.4: {}
 
   js-tokens@4.0.0: {}
 

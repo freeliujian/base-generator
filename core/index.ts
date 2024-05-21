@@ -1,2 +1,7 @@
-export { default as Generator } from './generator/generator';
-export { default as BaseGenerator } from './generator/baseGenerator';
+import Generator from './generator/generator';
+import BaseGenerator from './generator/baseGenerator';
+
+export default  {
+  Generator,
+  BaseGenerator
+}
