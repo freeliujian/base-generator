@@ -6,8 +6,6 @@ module.exports = function (api) {
     esm: ["@babel/preset-env", { modules: false }],
   };
 
-  console.log(presets[process.env.BABEL_ENV], process.env.BABEL_ENV);
-  
   return {
     presets: [
       presets[process.env.BABEL_ENV],

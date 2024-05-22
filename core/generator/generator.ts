@@ -2,7 +2,7 @@ import { copyFileSync, readFileSync, statSync, writeFileSync } from 'fs';
 import { dirname, join, relative } from 'path';
 import chalk from 'chalk';
 import fsExtra from 'fs-extra';
-import glob from 'glob';
+import {globSync} from 'glob';
 import prompts from 'prompts';
 import yParser from 'yargs-parser';
 import Handlebars from 'handlebars';
@@ -70,7 +70,7 @@ class Generator {
   }
 
   copyDirectory(opts: IGeneratorCopyDirectoryOpts) {
-    const files = glob.sync('**/*', {
+    const files = globSync('**/*', {
       cwd: opts.path,
       dot: true,
       ignore: ['**/node_modules/**'],
