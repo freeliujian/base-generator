@@ -29,5 +29,19 @@ baseG.run();
 
 ```
 
-## 后续
-1. 支持handlebars 的一些API， `setHelpers`等...
+## 使用Helper
+
+``` js
+const baseG = new BaseGenerator(option);
+const fn = {
+  name: 'aps',
+  fn: (aString) => {
+    return 'aps'.toUpperCase()
+  }
+}
+
+baseG.helper(fn);
+baseG.run();
+
+```
+将注册一个`aps`的方法，在handlebars，同`registerHelper`。

@@ -26,6 +26,11 @@ interface IGeneratorCopyDirectoryOpts extends IGeneratorBaseOpts {
   path: string;
 }
 
+interface helpers {
+  name: string;
+  fn: Handlebars.HelperDelegate;
+}
+
 class Generator {
   baseDir: string;
   args: yParser.Arguments;
@@ -54,7 +59,12 @@ class Generator {
     return [] as any;
   }
 
-  async writing() {}
+  async writing() { }
+  
+  helper(helpers: helpers) {
+    const {name ,fn} = helpers
+    Handlebars.registerHelper(name, fn);
+  }
 
   copyTpl(opts: IGeneratorCopyTplOpts) {
     const tpl = readFileSync(opts.templatePath, 'utf-8');

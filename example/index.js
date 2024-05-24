@@ -15,4 +15,12 @@ const option = {
 
 const baseG = new BaseGenerator(option);
 
+const fn = {
+  name: 'aps',
+  fn: (aString) => {
+    return 'aps'.toUpperCase()
+  }
+}
+
+baseG.helper(fn);
 baseG.run();
