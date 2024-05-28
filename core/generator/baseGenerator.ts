@@ -48,7 +48,7 @@ export default class BaseGenerator extends Generator {
         target: this.target,
       });
     } else {
-      if (this.path.endsWith('.tpl')) {
+      if (this.path.endsWith('.sa')) {
         this.copyTpl({
           templatePath: this.path,
           target: this.target,

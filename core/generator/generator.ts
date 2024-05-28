@@ -66,7 +66,7 @@ class Generator {
     Handlebars.registerHelper(name, fn);
   }
 
-  copyTpl(opts: IGeneratorCopyTplOpts) {
+  copyTpl(opts: IGeneratorCopyTplOpts) { 
     const tpl = readFileSync(opts.templatePath, 'utf-8');
     const content = Handlebars.compile(tpl);
     const configContent = content(opts.context)
@@ -88,10 +88,10 @@ class Generator {
     files.forEach((file: any) => {
       const absFile = join(opts.path, file);
       if (statSync(absFile).isDirectory()) return;
-      if (file.endsWith('.tpl')) {
+      if (file.endsWith('.sa')) {
         this.copyTpl({
           templatePath: absFile,
-          target: join(opts.target, file.replace(/\.tpl$/, '')),
+          target: join(opts.target, file.replace(/\.sa$/, '')),
           context: opts.context,
         });
       } else {
