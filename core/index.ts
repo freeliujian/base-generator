@@ -3,5 +3,5 @@ import BaseGenerator from './generator/baseGenerator';
 
 export default  {
   Generator,
-  BaseGenerator
+  BaseGenerator,
 }

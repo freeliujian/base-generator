@@ -65,7 +65,7 @@ const buildTypes = () => {
   .pipe(dest(paths.dest.types))
 }
 
-const buildScript = series(buildESM, buildCJS, buildTypes);
+const buildScript = series(buildCJS, buildTypes);
 
 const watchFiles = () => {
   return watch(paths.scripts, buildScript);
