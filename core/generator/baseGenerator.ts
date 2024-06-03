@@ -4,7 +4,7 @@ import fsExtra from 'fs-extra';
 import prompts from 'prompts';
 import Generator, { type IGeneratorOpts } from './generator';
 
-interface IBaseGeneratorOpts extends Partial<Omit<IGeneratorOpts, 'args'>> {
+export interface IBaseGeneratorOpts extends Partial<Omit<IGeneratorOpts, 'args'>> {
   path: string;
   target: string;
   data?: any;
