@@ -55,8 +55,8 @@ class Generator {
     await this.writing();
   }
 
-  prompting() {
-    return [] as any;
+  prompting(questions?: any) {
+    return questions || [] as any;
   }
 
   async writing() { }
