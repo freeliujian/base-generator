@@ -6,6 +6,7 @@ import {globSync} from 'glob';
 import prompts from 'prompts';
 import yParser from 'yargs-parser';
 import Handlebars from 'handlebars';
+import path from 'node:path';
 
 export interface IGeneratorOpts {
   baseDir: string;
@@ -57,6 +58,15 @@ class Generator {
 
   prompting(questions?: any) {
     return questions || [] as any;
+  }
+
+  sourceRoot() {
+    return path.join(__dirname, 'templates');
+  }
+
+  templatePath(...paths) {
+    const templateRoot = this.sourceRoot();
+    return path.join(templateRoot, ...paths);
   }
 
   async writing() { }
