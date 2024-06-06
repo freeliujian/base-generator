@@ -1,8 +1,8 @@
 const { BaseGenerator } = require("../dist/cjs/index").default;
 
 const option = {
-  path: "./example/tem",
-  target: "./example/target/path",
+  // path: "./example/tem",
+  // target: "./example/target/path",
   data: {},
   questions: [
     {
@@ -29,3 +29,4 @@ const fn = {
 
 baseG.helper(fn);
 baseG.run();
+ 

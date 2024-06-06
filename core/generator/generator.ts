@@ -7,6 +7,8 @@ import prompts from 'prompts';
 import yParser from 'yargs-parser';
 import Handlebars from 'handlebars';
 import path from 'node:path';
+import debug from 'debug';
+
 
 export interface IGeneratorOpts {
   baseDir: string;
@@ -16,7 +18,7 @@ export interface IGeneratorOpts {
 
 interface IGeneratorBaseOpts {
   context: Record<string, any>;
-  target: string;
+  target?: string;
 }
 
 interface IGeneratorCopyTplOpts extends IGeneratorBaseOpts {
@@ -32,17 +34,20 @@ interface helpers {
   fn: Handlebars.HelperDelegate;
 }
 
+debug('fsExtra');
+
 class Generator {
   baseDir: string;
   args: yParser.Arguments;
   slient: boolean;
   prompts: any;
+  private _destinationRoot: string;
 
   constructor({ baseDir, args, slient }: IGeneratorOpts) {
     this.baseDir = baseDir;
     this.args = args;
     this.slient = !!slient;
-
+    this._destinationRoot = '';
     this.prompts = {};
   }
 
@@ -69,24 +74,33 @@ class Generator {
     return path.join(templateRoot, ...paths);
   }
 
+  destinationRoot(rootPath?: string) {
+    if (rootPath) {
+      this._destinationRoot = path.resolve(rootPath);
+    }
+    return this._destinationRoot || process.cwd();
+  }
+
   async writing() { }
   
   helper(helpers: helpers) {
-    const {name ,fn} = helpers
-    Handlebars.registerHelper(name, fn);
+    if (helpers) {
+      const {name ,fn} = helpers
+      Handlebars.registerHelper(name, fn);
+    }
   }
 
   copyTpl(opts: IGeneratorCopyTplOpts) { 
     const tpl = readFileSync(opts.templatePath, 'utf-8');
     const content = Handlebars.compile(tpl);
     const configContent = content(opts.context)
-    fsExtra.mkdirpSync(dirname(opts.target));
+    fsExtra.mkdirpSync(dirname(opts.target || this.destinationRoot()));
     if (!this.slient) {
       console.log(
-        `${chalk.green('Write:')} ${relative(this.baseDir, opts.target)}`,
+        `${chalk.green('Write:')} ${relative(this.baseDir, opts.target || this.destinationRoot())}`,
       );
     }
-    writeFileSync(opts.target, configContent, 'utf-8');
+    writeFileSync(opts.target || this.destinationRoot(), configContent, 'utf-8');
   }
 
   copyDirectory(opts: IGeneratorCopyDirectoryOpts) {
@@ -101,14 +115,14 @@ class Generator {
       if (file.endsWith('.sa')) {
         this.copyTpl({
           templatePath: absFile,
-          target: join(opts.target, file.replace(/\.sa$/, '')),
+          target: join(opts.target || this.destinationRoot(), file.replace(/\.sa$/, '')),
           context: opts.context,
         });
       } else {
         if (!this.slient) {
           console.log(`${chalk.green('Copy: ')} ${file}`);
         }
-        const absTarget = join(opts.target, file);
+        const absTarget = join(opts.target || this.destinationRoot(), file);
         fsExtra.mkdirpSync(dirname(absTarget));
         copyFileSync(absFile, absTarget);
       }

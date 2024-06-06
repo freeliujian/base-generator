@@ -26,7 +26,7 @@ export default class BaseGenerator extends Generator {
     slient,
   }: IBaseGeneratorOpts) {
     super({ baseDir: baseDir || target, args: data, slient });
-    this.path = path;
+    this.path = path || this.templatePath();
     this.target = target;
     this.data = data;
     this.questions = questions || [];
@@ -41,6 +41,7 @@ export default class BaseGenerator extends Generator {
       ...this.data,
       ...this.prompts,
     };
+    console.log(this.path);
     if (statSync(this.path).isDirectory()) {
       this.copyDirectory({
         context,
