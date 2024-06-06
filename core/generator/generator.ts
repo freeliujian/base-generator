@@ -64,7 +64,7 @@ class Generator {
     return path.join(__dirname, 'templates');
   }
 
-  templatePath(...paths) {
+  templatePath(...paths: any[]) {
     const templateRoot = this.sourceRoot();
     return path.join(templateRoot, ...paths);
   }
