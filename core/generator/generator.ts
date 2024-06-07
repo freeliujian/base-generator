@@ -88,7 +88,7 @@ class Generator {
       const {name ,fn} = helpers
       Handlebars.registerHelper(name, fn);
     }
-  }
+   }
 
   copyTpl(opts: IGeneratorCopyTplOpts) { 
     const tpl = readFileSync(opts.templatePath, 'utf-8');
