@@ -44,7 +44,7 @@ class Generator {
   private _destinationRoot: string;
 
   constructor({ baseDir, args, slient }: IGeneratorOpts) {
-    this.baseDir = baseDir;
+    this.baseDir = baseDir || this.templatePath();
     this.args = args;
     this.slient = !!slient;
     this._destinationRoot = '';
