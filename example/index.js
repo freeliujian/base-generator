@@ -1,9 +1,10 @@
 const { BaseGenerator } = require("../dist/cjs/index").default;
 
 const option = {
-  // path: "./example/tem",
-  // target: "./example/target/path",
+  path: "./example/templates",
+  target: "./example/target/path",
   data: {},
+  baseDir: './example/templates',
   questions: [
     {
       type: "number",

@@ -13,7 +13,9 @@ import debug from 'debug';
 export interface IGeneratorOpts {
   baseDir: string;
   args: yParser.Arguments;
+  templatePath?: string;
   slient?: boolean;
+  
 }
 
 interface IGeneratorBaseOpts {
@@ -42,13 +44,15 @@ class Generator {
   slient: boolean;
   prompts: any;
   private _destinationRoot: string;
+  _templatePath: any;
 
-  constructor({ baseDir, args, slient }: IGeneratorOpts) {
-    this.baseDir = baseDir || this.templatePath();
+  constructor({ baseDir, args, templatePath, slient }: IGeneratorOpts) {
     this.args = args;
     this.slient = !!slient;
     this._destinationRoot = '';
     this.prompts = {};
+    this.baseDir = baseDir || this.templatePath();
+    this._templatePath = templatePath || this.sourceRoot();
   }
 
   async run() {
@@ -59,10 +63,12 @@ class Generator {
       },
     });
     await this.writing();
+    await this.afterWriting();
+    await this.end();
   }
 
-  prompting(questions?: any) {
-    return questions || [] as any;
+  prompting() {
+    return [] as any;
   }
 
   sourceRoot() {
@@ -70,8 +76,7 @@ class Generator {
   }
 
   templatePath(...paths: any[]) {
-    const templateRoot = this.sourceRoot();
-    return path.join(templateRoot, ...paths);
+    return path.join(this._templatePath, ...paths);
   }
 
   destinationRoot(rootPath?: string) {
@@ -82,6 +87,10 @@ class Generator {
   }
 
   async writing() { }
+
+  async afterWriting() { }
+
+  async end() { }
   
   helper(helpers: helpers) {
     if (helpers) {
