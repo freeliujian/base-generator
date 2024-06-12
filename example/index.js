@@ -10,6 +10,15 @@ const option = {
       name: "name",
       message: "请为你的项目命名",
     },
+    // {
+    //   type: 'multiselect',
+    //   name: 'sex',
+    //   message: '选择你的性别',
+    //   default: ["liujian"],
+    //   choices: [
+    //     { name: 'liujian', value: 'liujian' },
+    //   ]
+    // },
   ],
 };
 
@@ -17,12 +26,15 @@ const baseG = new BaseGenerator(option);
 
 const fn = {
   name: "includes",
-  fn: (context, item) => {
-    console.log(context)
-    if (context === '123') {
-      return context;
+  fn: (context, item, options) => {
+    if (context) {
+      if (context.includes(item)) {
+        return options.fn(this);
+      } else {
+        return options.inverse(this);
+      }
     } else {
-      return '你的名字不是123'
+      return " ";
     }
   },
 };

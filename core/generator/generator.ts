@@ -93,7 +93,6 @@ class Generator {
   async helper(helpers: helpers) {
     if (helpers) {
       const { name, fn } = helpers
-      console.log(2);
       Handlebars.registerHelper(name, fn);
     }
    }
@@ -101,7 +100,7 @@ class Generator {
   copyTpl(opts: IGeneratorCopyTplOpts) { 
     const tpl = readFileSync(opts.templatePath, 'utf-8');
     const content = Handlebars.compile(tpl);
-    const configContent = content(opts.context)
+    const configContent = content(opts.context);
     fsExtra.mkdirpSync(dirname(opts.target || this.destinationRoot()));
     if (!this.slient) {
       console.log(
@@ -121,7 +120,6 @@ class Generator {
       const absFile = join(opts.path, file);
       if (statSync(absFile).isDirectory()) return;
       if (file.endsWith('.sa')) {
-        console.log(2);
         this.copyTpl({
           templatePath: absFile,
           target: join(opts.target || this.destinationRoot(), file.replace(/\.sa$/, '')),

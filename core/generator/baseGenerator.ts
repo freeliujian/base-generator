@@ -41,7 +41,6 @@ export default class BaseGenerator extends Generator {
       ...this.data,
       ...this.prompts,
     };
-    console.log(this.path);
     if (statSync(this.path).isDirectory()) {
       this.copyDirectory({
         context,
