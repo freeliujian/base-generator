@@ -13,7 +13,6 @@ import debug from 'debug';
 export interface IGeneratorOpts {
   baseDir: string;
   args: yParser.Arguments;
-  templatePath?: string;
   slient?: boolean;
   
 }
@@ -46,13 +45,12 @@ class Generator {
   private _destinationRoot: string;
   _templatePath: any;
 
-  constructor({ baseDir, args, templatePath, slient }: IGeneratorOpts) {
+  constructor({ baseDir, args, slient }: IGeneratorOpts) {
     this.args = args;
     this.slient = !!slient;
     this._destinationRoot = '';
     this.prompts = {};
-    this.baseDir = baseDir || this.templatePath();
-    this._templatePath = templatePath || this.sourceRoot();
+    this.baseDir = baseDir;
   }
 
   async run() {
@@ -92,9 +90,10 @@ class Generator {
 
   async end() { }
   
-  helper(helpers: helpers) {
+  async helper(helpers: helpers) {
     if (helpers) {
-      const {name ,fn} = helpers
+      const { name, fn } = helpers
+      console.log(2);
       Handlebars.registerHelper(name, fn);
     }
    }
@@ -122,6 +121,7 @@ class Generator {
       const absFile = join(opts.path, file);
       if (statSync(absFile).isDirectory()) return;
       if (file.endsWith('.sa')) {
+        console.log(2);
         this.copyTpl({
           templatePath: absFile,
           target: join(opts.target || this.destinationRoot(), file.replace(/\.sa$/, '')),

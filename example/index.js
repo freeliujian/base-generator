@@ -4,7 +4,6 @@ const option = {
   path: "./example/templates",
   target: "./example/target/path",
   data: {},
-  baseDir: './example/templates',
   questions: [
     {
       type: "number",
