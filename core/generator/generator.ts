@@ -49,6 +49,7 @@ class Generator {
     this.args = args;
     this.slient = !!slient;
     this._destinationRoot = '';
+    this._templatePath = ''; 
     this.prompts = {};
     this.baseDir = baseDir;
   }
@@ -95,19 +96,20 @@ class Generator {
       const { name, fn } = helpers
       Handlebars.registerHelper(name, fn);
     }
-   }
+  }
 
-  copyTpl(opts: IGeneratorCopyTplOpts) { 
+  copyTpl(opts: IGeneratorCopyTplOpts) {
     const tpl = readFileSync(opts.templatePath, 'utf-8');
     const content = Handlebars.compile(tpl);
     const configContent = content(opts.context);
     fsExtra.mkdirpSync(dirname(opts.target || this.destinationRoot()));
     if (!this.slient) {
       console.log(
-        `${chalk.green('Write:')} ${relative(this.baseDir, opts.target || this.destinationRoot())}`,
+        `${chalk.green('Write:')} ${relative(this.baseDir, opts.target as string)}`,
       );
     }
-    writeFileSync(opts.target || this.destinationRoot(), configContent, 'utf-8');
+    console.log(opts.target || this.destinationRoot(), opts.target, this.destinationRoot());
+    writeFileSync(opts.target as string, configContent, 'utf-8');
   }
 
   copyDirectory(opts: IGeneratorCopyDirectoryOpts) {
@@ -122,14 +124,14 @@ class Generator {
       if (file.endsWith('.sa')) {
         this.copyTpl({
           templatePath: absFile,
-          target: join(opts.target || this.destinationRoot(), file.replace(/\.sa$/, '')),
+          target: join(opts.target as string, file.replace(/\.sa$/, '')),
           context: opts.context,
         });
       } else {
         if (!this.slient) {
           console.log(`${chalk.green('Copy: ')} ${file}`);
         }
-        const absTarget = join(opts.target || this.destinationRoot(), file);
+        const absTarget = join(opts.target as string, file);
         fsExtra.mkdirpSync(dirname(absTarget));
         copyFileSync(absFile, absTarget);
       }
