@@ -14,6 +14,7 @@ export interface IGeneratorOpts {
   baseDir: string;
   args: yParser.Arguments;
   slient?: boolean;
+  templatePath?:string
   
 }
 
@@ -45,11 +46,11 @@ class Generator {
   private _destinationRoot: string;
   _templatePath: any;
 
-  constructor({ baseDir, args, slient }: IGeneratorOpts) {
+  constructor({ baseDir, args, slient, templatePath}: IGeneratorOpts) {
     this.args = args;
     this.slient = !!slient;
-    this._destinationRoot = '';
-    this._templatePath = ''; 
+    this._destinationRoot = baseDir;
+    this._templatePath = templatePath; 
     this.prompts = {};
     this.baseDir = baseDir;
   }
@@ -108,7 +109,6 @@ class Generator {
         `${chalk.green('Write:')} ${relative(this.baseDir, opts.target as string)}`,
       );
     }
-    console.log(opts.target || this.destinationRoot(), opts.target, this.destinationRoot());
     writeFileSync(opts.target as string, configContent, 'utf-8');
   }
 
@@ -119,7 +119,7 @@ class Generator {
       ignore: ['**/node_modules/**'],
     });
     files.forEach((file: any) => {
-      const absFile = join(opts.path, file);
+      const absFile = join(opts.path || this._templatePath, file);
       if (statSync(absFile).isDirectory()) return;
       if (file.endsWith('.sa')) {
         this.copyTpl({

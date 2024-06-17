@@ -25,11 +25,12 @@ export default class BaseGenerator extends Generator {
     baseDir,
     slient,
   }: IBaseGeneratorOpts) {
-    super({ baseDir: baseDir || target, args: data, slient });
+    super({ baseDir: baseDir || target, args: data, slient, templatePath:path });
     this.path = path;
     this.target = target;
     this.data = data;
     this.questions = questions || [];
+
   }
 
   prompting() {
