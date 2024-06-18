@@ -55,7 +55,12 @@ class Generator {
     this.baseDir = baseDir;
   }
 
+  async runBefore() {
+
+  }
+
   async run() {
+    await this.runBefore();
     const questions = this.prompting();
     this.prompts = await prompts(questions, {
       onCancel() {
