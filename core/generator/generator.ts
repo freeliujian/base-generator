@@ -67,6 +67,7 @@ class Generator {
         process.exit(1);
       },
     });
+    await this.beforeWriting();
     await this.writing();
     await this.afterWriting();
     await this.end();
@@ -95,6 +96,8 @@ class Generator {
 
   async afterWriting() { }
 
+  async beforeWriting() { }
+  
   async end() { }
   
   async helper(helpers: helpers) {
