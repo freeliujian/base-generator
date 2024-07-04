@@ -1,21 +1,21 @@
 import { copyFileSync, statSync } from 'fs';
 import { dirname } from 'path';
 import fsExtra from 'fs-extra';
-import prompts from 'prompts';
+import inquirer from 'inquirer';
 import Generator, { type IGeneratorOpts } from './generator';
 
 export interface IBaseGeneratorOpts extends Partial<Omit<IGeneratorOpts, 'args'>> {
   path: string;
   target: string;
   data?: any;
-  questions?: prompts.PromptObject[];
+  questions?: inquirer.prompts.PromptCollection[];
 }
 
 export default class BaseGenerator extends Generator {
   path: string;
   target: string;
   data: any;
-  questions: prompts.PromptObject[];
+  questions: inquirer.prompts.PromptCollection[];
 
   constructor({
     path,

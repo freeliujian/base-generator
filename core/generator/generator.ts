@@ -3,11 +3,11 @@ import { dirname, join, relative } from 'path';
 import chalk from 'chalk';
 import fsExtra from 'fs-extra';
 import {globSync} from 'glob';
-import prompts from 'prompts';
 import yParser from 'yargs-parser';
 import Handlebars from 'handlebars';
 import path from 'node:path';
 import debug from 'debug';
+import inquirer from 'inquirer';
 
 
 export interface IGeneratorOpts {
@@ -62,7 +62,7 @@ class Generator {
   async run() {
     await this.runBefore();
     const questions = this.prompting();
-    this.prompts = await prompts(questions, {
+    this.prompts = await inquirer.prompt(questions, {
       onCancel() {
         process.exit(1);
       },

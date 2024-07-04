@@ -1,6 +1,6 @@
 # Desc
 
-一个基于 prompts 和 handlebars 的创建模板的 node脚本 （基于umi的源码创）
+一个基于 inquirer 和 handlebars 的创建模板的 node脚本 
 
 ## 如何使用
 
