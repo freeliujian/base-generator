@@ -3,6 +3,10 @@ import { dirname } from 'path';
 import fsExtra from 'fs-extra';
 import inquirer from 'inquirer';
 import Generator, { type IGeneratorOpts } from './generator';
+import * as until from 'scaffold-tool';
+
+const { constants } = until.default;
+const { DEFAULT_END_NAME } = constants;
 
 export interface IBaseGeneratorOpts extends Partial<Omit<IGeneratorOpts, 'args'>> {
   path: string;
@@ -49,7 +53,7 @@ export default class BaseGenerator extends Generator {
         target: this.target,
       });
     } else {
-      if (this.path.endsWith('.sa')) {
+      if (this.path.endsWith(`${DEFAULT_END_NAME}`)) {
         this.copyTpl({
           templatePath: this.path,
           target: this.target,

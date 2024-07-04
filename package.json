@@ -1,6 +1,6 @@
 {
   "name": "base-handlebars-generator",
-  "version": "1.0.93",
+  "version": "1.0.94",
   "description": "",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -46,6 +46,7 @@
     "glob": "^10.3.15",
     "handlebars": "^4.7.8",
     "inquirer": "^6.4.1",
+    "scaffold-tool": "1.0.83",
     "yargs-parser": "^21.1.1"
   }
 }

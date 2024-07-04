@@ -8,6 +8,10 @@ import Handlebars from 'handlebars';
 import path from 'node:path';
 import debug from 'debug';
 import inquirer from 'inquirer';
+import * as until from 'scaffold-tool';
+
+const { constants } = until.default;
+const { DEFAULT_END_NAME, RAGEX_END_FILE } = constants;
 
 
 export interface IGeneratorOpts {
@@ -129,10 +133,10 @@ class Generator {
     files.forEach((file: any) => {
       const absFile = join(opts.path || this._templatePath, file);
       if (statSync(absFile).isDirectory()) return;
-      if (file.endsWith('.sa')) {
+      if (file.endsWith(`${DEFAULT_END_NAME}`)) {
         this.copyTpl({
           templatePath: absFile,
-          target: join(opts.target as string, file.replace(/\.sa$/, '')),
+          target: join(opts.target as string, file.replace(RAGEX_END_FILE, '')),
           context: opts.context,
         });
       } else {
